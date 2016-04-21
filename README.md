@@ -65,7 +65,7 @@ Then, create a file `psql-rc-test.yaml` containing:
         metadata:
           labels:
             name: psql-test
-            service: psql
+            service: psql-test
         spec:
           containers:
           - name: psql-test
@@ -167,10 +167,10 @@ Create a directory `k8s-jobs/`, then place native Kubernetes Job `.yaml` files i
                       key: pgport
           restartPolicy: Never
 
-Then, create a [`crond` style][cron-wikipedia] schedule for the job by creating a directory named `cron/` with a file with the **same name** as your job.  For example, to run it every `5` minutes:
+Then, create a [`crond` style][cron-wikipedia] schedule for the job by creating a directory named `cron/` with a file with the **same name** as your job, passing your job name as the first argument to `/app/processor/runner`.  For example, to run it every `5` minutes:
 
     mkdir -p cron/
-    echo "*/5 * * * * root /app/processor/runner psql >> /var/log/cron.log 2>&1" > cron/psql-test
+    echo "*/5 * * * * root /app/processor/runner psql-test >> /var/log/cron.log 2>&1" > cron/psql-test
 
 Next, build your job container with:
 
