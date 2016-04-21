@@ -1,0 +1,6 @@
+# Ignore all build & credentials related files
+.aws/
+.bash_history
+.docker/
+.docker/config.json
+.lpass/
