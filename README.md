@@ -210,9 +210,10 @@ Note: If you wish to run multiple instances of the `job-runner`, you will need t
 If all went well, you should now have a test job scheduled to run every 5 minutes.  To see the jobs & pods:
 
     kubectl get pods -l name=job-runner
+    kubectl describe rc,pod -l name=job-runner
     kubectl get jobs -l service=psql-test
     kubectl get pods -l service=psql-test
-
+    kubectl describe jobs,pods -l service=psql-test
 
 [returnpath-job-runner]: https://github.com/ReturnPath/job-runner
 [cron-wikipedia]: https://en.wikipedia.org/wiki/Cron#Configuration_file
