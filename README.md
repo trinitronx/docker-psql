@@ -172,6 +172,14 @@ Then, create a [`crond` style][cron-wikipedia] schedule for the job by creating 
     mkdir -p cron/
     echo "*/5 * * * * root /app/processor/runner psql-test >> /var/log/cron.log 2>&1" > cron/psql-test
 
+Then, create a `defaults/job-name` file, even if it is blank!  **It is important to note** that without this file, the job reaper will not delete the job, and subsequent runs will fail due to already having existed.  This can be useful for testing that a job runs one time & inspecting things afterwards without worrying about the reaper deleting jobs & pods.
+
+Any files under `default` will be copied into `/etc/default/`, and sourced in the context of the job-runner container's "runner" script. This can be useful for setting environment variables or executing pre-task bash commands or functions.
+
+To create a blank `/etc/defaults` file for the job:
+
+    touch defaults/psql-test
+
 Next, build your job container with:
 
     docker build -t your-dockerhub-username/test-jobs .
@@ -214,6 +222,11 @@ If all went well, you should now have a test job scheduled to run every 5 minute
     kubectl get jobs -l service=psql-test
     kubectl get pods -l service=psql-test
     kubectl describe jobs,pods -l service=psql-test
+
+To follow the logs for the job-runner or job pods, find the unique pod name for each via the above commands and run either of:
+
+    kubectl logs -f job-runner-xxxxx
+    kubectl logs -f psql-test-xxxxx
 
 [returnpath-job-runner]: https://github.com/ReturnPath/job-runner
 [cron-wikipedia]: https://en.wikipedia.org/wiki/Cron#Configuration_file
