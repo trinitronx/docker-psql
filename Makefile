@@ -52,7 +52,7 @@ list:
 	cp ~/.docker/config.json .docker/config.json
 
 build/Dockerfile.make.onbuild:
-	echo 'FROM $(REPO):build\n\nRUN [ -e /src/jobs ] || mkdir /src/jobs' > build/Dockerfile.make.onbuild
+	echo 'FROM $(REPO):build' > build/Dockerfile.make.onbuild
 
 build-inception-container: .docker/config.json
 	docker pull $(BUILD_TOOLS)
@@ -74,7 +74,12 @@ container-package: build-inception-container build/Dockerfile.make.onbuild $(she
 	docker rmi "$(REPO):build-$(REV)"
 
 ship: package .docker/config.json
-	docker tag $(REPO):$(REV) $(REPO):latest
+	# docker tag $(REPO):$(REV) $(REPO):latest
+	#TAG=docker run --rm  $(REPO):$(REV) --version 2>&1 | sed -e 's|.* \\([0-9\\.]*\\)$|\\1|'
+	#docker tag $(REPO):$(REV) $(REPO):v$$TAG
+	bash -c "TAG=$$(docker run --rm  $(REPO):$(REV) --version 2>&1 | sed -e 's|.* \([0-9\.]*\)$$|\1|') ; \
+	         docker tag $(REPO):$(REV) $(REPO):v\$$TAG ; \
+	        "
 	docker --config=.docker/ push $(REPO):$(REV)
 	docker --config=.docker/ push $(REPO):latest
 
