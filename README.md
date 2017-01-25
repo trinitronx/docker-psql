@@ -230,3 +230,22 @@ To follow the logs for the job-runner or job pods, find the unique pod name for 
 
 [returnpath-job-runner]: https://github.com/ReturnPath/job-runner
 [cron-wikipedia]: https://en.wikipedia.org/wiki/Cron#Configuration_file
+
+## License
+
+This project is simply a packaging script for the [`psql`][psql-repo-license], and [`awscli`][awscli-github] tools.  As such, nothing in this repository is "novel", or "non-obvious". This repo is therefore released under the permissive [MIT License][mit-license].
+
+However, the upstream tools are released under various Open Source Licenses:
+
+ - ["`awscli`"][awscli-license] is released under the [Apache 2.0 License][apache-2-license]. 
+ - ["`psql`"][psql-license] is released under the [PostgreSQL License][PostgreSQL-license]. 
+
+The text of these tool's licenses are included here to avoid confusion.
+
+[mit-license]: https://choosealicense.com/licenses/mit/
+[awscli-github]: https://github.com/aws/aws-cli
+[apache-2-license]: https://choosealicense.com/licenses/apache-2.0/
+[awscli-license]: https://github.com/aws/aws-cli/blob/develop/LICENSE.txt
+[psql-repo-license]: https://git.postgresql.org/gitweb/?p=postgresql.git;a=blob;f=COPYRIGHT;h=c320eccac08f7bec087f47efd48182eeca639d26;hb=HEAD
+[psql-license]: https://www.postgresql.org/about/licence/
+[PostgreSQL-license]: https://opensource.org/licenses/postgresql
